@@ -1,0 +1,6 @@
+{
+  "Port": 8080,
+  "RootFolder": "www",
+  "LogFolder": "logs",
+  "CompressionMinBytes": 200
+}
