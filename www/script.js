@@ -6,22 +6,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const resultado = document.getElementById("resultado");
 
-    // Muestra en pantalla lo que respondió el servidor.
-    async function mostrar(metodo, respuesta) {
-        const texto = await respuesta.text();
-        resultado.textContent =
-            metodo + " -> " + respuesta.status + " " + respuesta.statusText + "\n" +
-            "Content-Type: " + respuesta.headers.get("Content-Type") + "\n\n" +
-            texto;
-    }
-
-    async function enviar(metodo, url, opciones) {
+    // Solo muestra un mensaje corto; la página no cambia ni se abre otra.
+    async function enviar(metodo, url, opciones, mensajeOk) {
         resultado.textContent = "Enviando " + metodo + "...";
         try {
             const respuesta = await fetch(url, opciones);
-            await mostrar(metodo, respuesta);
+            if (respuesta.ok) {
+                resultado.textContent = mensajeOk;
+            } else {
+                resultado.textContent = "El servidor respondió con error " + respuesta.status + ".";
+            }
         } catch (error) {
-            resultado.textContent = metodo + " falló: " + error.message;
+            resultado.textContent = "No se pudo conectar con el servidor.";
         }
     }
 
@@ -31,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
             origen: "boton",
             hora: new Date().toLocaleTimeString()
         });
-        enviar("GET", "/?" + parametros.toString(), { method: "GET" });
+        enviar("GET", "/?" + parametros.toString(), { method: "GET" }, "Datos recibidos (GET).");
     });
 
     // POST con cuerpo: el servidor lo registra en el log como "body".
@@ -45,6 +41,6 @@ document.addEventListener("DOMContentLoaded", function() {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: datos.toString()
-        });
+        }, "Datos recibidos (POST).");
     });
 });
