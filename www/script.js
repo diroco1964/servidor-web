@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
         alert("¡Hola! Has hecho clic en el botón.");
     });
 
+    const formulario = document.getElementById("formulario");
     const resultado = document.getElementById("resultado");
 
     // Solo muestra un mensaje corto; la página no cambia ni se abre otra.
@@ -21,22 +22,28 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // GET con parametros en la URL: el servidor los registra en el log como "query".
-    document.getElementById("btnGet").addEventListener("click", function() {
-        const parametros = new URLSearchParams({
-            origen: "boton",
-            hora: new Date().toLocaleTimeString()
+    // Lee lo que escribió el usuario; si falta algún campo, avisa y no envía.
+    function leerDatos() {
+        if (!formulario.reportValidity()) {
+            return null;
+        }
+        return new URLSearchParams({
+            nombre: document.getElementById("nombre").value.trim(),
+            mensaje: document.getElementById("mensaje").value.trim()
         });
-        enviar("GET", "/?" + parametros.toString(), { method: "GET" }, "Datos recibidos (GET).");
+    }
+
+    // GET: los datos viajan en la URL; el servidor los registra como "query".
+    document.getElementById("btnGet").addEventListener("click", function() {
+        const datos = leerDatos();
+        if (datos === null) return;
+        enviar("GET", "/?" + datos.toString(), { method: "GET" }, "Datos recibidos (GET).");
     });
 
-    // POST con cuerpo: el servidor lo registra en el log como "body".
+    // POST: los datos viajan en el cuerpo; el servidor los registra como "body".
     document.getElementById("btnPost").addEventListener("click", function() {
-        const datos = new URLSearchParams({
-            nombre: "prueba",
-            mensaje: "Hola desde el boton POST",
-            hora: new Date().toLocaleTimeString()
-        });
+        const datos = leerDatos();
+        if (datos === null) return;
         enviar("POST", "/", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },

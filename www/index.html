@@ -17,9 +17,17 @@
 
         <section class="prueba-http">
             <h2>Probar el servidor</h2>
-            <p>Cada botón envía una solicitud y deja una línea en <code>logs/yyyy-MM-dd.log</code>.</p>
-            <button id="btnGet" type="button">Enviar GET</button>
-            <button id="btnPost" type="button">Enviar POST</button>
+            <p>Escribí tus datos y elegí cómo enviarlos. Cada envío deja una línea en <code>logs/yyyy-MM-dd.log</code>.</p>
+            <form id="formulario" autocomplete="off">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" name="nombre" type="text" maxlength="50" required>
+
+                <label for="mensaje">Mensaje</label>
+                <input id="mensaje" name="mensaje" type="text" maxlength="200" required>
+
+                <button id="btnGet" type="button">Enviar por GET (va en la URL)</button>
+                <button id="btnPost" type="button">Enviar por POST (va en el cuerpo)</button>
+            </form>
             <pre id="resultado" aria-live="polite">Todavía no se envió ninguna solicitud.</pre>
         </section>
     </main>
