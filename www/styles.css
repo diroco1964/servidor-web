@@ -39,3 +39,18 @@ button {
 button:hover {
     background-color: #006494;
 }
+
+.prueba-http {
+    margin-top: 2em;
+    padding: 1em;
+    background-color: white;
+    border: 1px solid #ccc;
+}
+
+.prueba-http pre {
+    background-color: #222;
+    color: #eee;
+    padding: 1em;
+    white-space: pre-wrap;
+    word-break: break-word;
+}

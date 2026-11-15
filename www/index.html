@@ -14,6 +14,14 @@
         <p>Este es un ejemplo de una página HTML con CSS y JavaScript incluidos.</p>
         <img src="imagen.png" alt="Descripción de la imagen">
         <button id="myButton">Haz clic aquí</button>
+
+        <section class="prueba-http">
+            <h2>Probar el servidor</h2>
+            <p>Cada botón envía una solicitud y deja una línea en <code>logs/yyyy-MM-dd.log</code>.</p>
+            <button id="btnGet" type="button">Enviar GET</button>
+            <button id="btnPost" type="button">Enviar POST</button>
+            <pre id="resultado" aria-live="polite">Todavía no se envió ninguna solicitud.</pre>
+        </section>
     </main>
     <script src="script.js"></script>
 </body>
